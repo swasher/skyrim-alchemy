@@ -4,8 +4,11 @@ from app import app
 from peewee import *
 from playhouse.db_url import connect
 
-FLASK_ENV = app.config['FLASK_ENV']
-DATABASE_URL = app.config['DATABASE_URL']
+# FLASK_ENV = app.config['FLASK_ENV']
+# DATABASE_URL = app.config['DATABASE_URL']
+FLASK_ENV = os.getenv('FLASK_ENV')
+DATABASE_URL = os.getenv('DATABASE_URL')
+
 
 database_proxy = DatabaseProxy()
 
