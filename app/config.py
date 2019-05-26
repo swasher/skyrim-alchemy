@@ -1,17 +1,6 @@
-"""
-Global Flask Application Setting
-
-See `.flaskenv` for default settings.
- """
-
 import os
 from app import app
 from dotenv import load_dotenv
-
-
-
-
-tw_consumer_key = os.getenv('TWITTER_CONSUMER_KEY')
 
 
 class Config(object):
