@@ -1,5 +1,7 @@
 import os
 from peewee import *
+from playhouse.db_url import connect
+
 
 FLASK_ENV = os.getenv("FLASK_ENV")
 
@@ -40,7 +42,9 @@ class Ingredient(Model):
 if FLASK_ENV == 'development':
     database = SqliteDatabase('base.db')
 elif FLASK_ENV == 'production':
-    database = PostgresqlDatabase('my_app', user='postgres', password='secret', host='10.1.0.9', port=5432)
+    DATABASE_URL = os.environ['DATABASE_URL']
+    database = connect(os.environ.get('DATABASE_URL'))
+    # database = PostgresqlDatabase('my_app', user='postgres', password='secret', host='10.1.0.9', port=5432)
 else:
     raise Exception('No FLASK_ENV environment during db init.')
 
