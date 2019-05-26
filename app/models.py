@@ -42,9 +42,9 @@ class Ingredient(Model):
 if FLASK_ENV == 'development':
     database = SqliteDatabase('base.db')
 elif FLASK_ENV == 'production':
+    # connect to heroku POSTGRES
     DATABASE_URL = os.environ['DATABASE_URL']
-    database = connect(os.environ.get('DATABASE_URL'))
-    # database = PostgresqlDatabase('my_app', user='postgres', password='secret', host='10.1.0.9', port=5432)
+    database = connect(DATABASE_URL)
 else:
     raise Exception('No FLASK_ENV environment during db init.')
 
