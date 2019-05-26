@@ -34,9 +34,10 @@ def main():
 
 @app.route('/')
 def index():
-    # s = os.getenv("SECRET_KEY")
-    # return f'Hello! flask_env={s}'
-    dist_dir = current_app.config['DIST_DIR']
-    entry = os.path.join(dist_dir, 'index.html')
-    # vuejs_html = '/app/dist/index.html'
-    return send_file(entry)
+    s = os.getenv("SECRET_KEY")
+    g = app.config['FLASK_ADMIN_SWATCH']
+    return f'Hello! flask_env={g}'
+    # dist_dir = current_app.config['DIST_DIR']
+    # entry = os.path.join(dist_dir, 'index.html')
+    # # vuejs_html = '/app/dist/index.html'
+    # return send_file(entry)

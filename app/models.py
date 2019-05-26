@@ -1,18 +1,8 @@
-import os
-from flask import current_app
 from app import app
 from peewee import *
 from playhouse.db_url import connect
-from .config import Config
-
-# FLASK_ENV = app.config['FLASK_ENV']
-# DATABASE_URL = app.config['DATABASE_URL']
-# FLASK_ENV = os.getenv('FLASK_ENV')
-# DATABASE_URL = os.getenv('DATABASE_URL')
-
 
 database_proxy = DatabaseProxy()
-
 
 class Effect(Model):
     name = CharField(unique=True)
@@ -33,14 +23,6 @@ class Ingredient(Model):
 
     class Meta:
         database = database_proxy  # This model uses the "people.db" database.
-
-# db = SqliteDatabase('base.db')
-# def initialize_db():
-#     db.connect()
-#     db.create_tables([Effect], safe=True)
-#     db.create_tables([Ingredient], safe=True)
-#     db.close()
-# initialize_db()
 
 
 # Based on configuration, use a different database.
