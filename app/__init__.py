@@ -16,8 +16,9 @@ from .models import Effect, Ingredient
 # admin ------------------------
 # app.config['FLASK_ADMIN_SWATCH'] = os.getenv("FLASK_ADMIN_SWATCH")
 # app.config['FLASK_ADMIN_SWATCH'] = current_app.config['FLASK_ADMIN_SWATCH']
-print('FLASK_ADMIN_SWATCH =', os.getenv('FLASK_ADMIN_SWATCH'))
+# print('FLASK_ADMIN_SWATCH =', os.getenv('FLASK_ADMIN_SWATCH'))
 # print(FLASK_ADMIN_SWATCH)
+app.config['FLASK_ADMIN_SWATCH'] = 'darkly'
 admin = Admin(app, name='Skyrim Alchemy', template_mode='bootstrap3')
 admin.add_view(ModelView(Effect))
 admin.add_view(ModelView(Ingredient))
@@ -34,10 +35,10 @@ def main():
 
 @app.route('/')
 def index():
-    s = os.getenv("SECRET_KEY")
-    g = current_app.config['FLASK_ADMIN_SWATCH']
-    return f'Hello! flask_env={g}'
-    # dist_dir = current_app.config['DIST_DIR']
-    # entry = os.path.join(dist_dir, 'index.html')
-    # # vuejs_html = '/app/dist/index.html'
-    # return send_file(entry)
+    # s = os.getenv("SECRET_KEY")
+    # g = current_app.config['FLASK_ADMIN_SWATCH']
+    # return f'Hello! flask_env={g}'
+    dist_dir = current_app.config['DIST_DIR']
+    entry = os.path.join(dist_dir, 'index.html')
+    # vuejs_html = '/app/dist/index.html'
+    return send_file(entry)
