@@ -1,0 +1,17 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+flask = "*"
+python-dotenv = "*"
+peewee = "*"
+flask-restful = "*"
+flask-admin = "*"
+wtf-peewee = "*"
+
+[requires]
+python_version = "3.7"
