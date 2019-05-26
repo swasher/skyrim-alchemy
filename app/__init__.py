@@ -7,7 +7,7 @@ from whitenoise import WhiteNoise
 
 
 app = Flask(__name__, static_folder='../dist/static')
-app.wsgi_app = WhiteNoise(app.wsgi_app, root='../dist/static/')
+# app.wsgi_app = WhiteNoise(app.wsgi_app, root='../dist/static/')
 
 
 
