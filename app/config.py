@@ -19,6 +19,7 @@ class Config(object):
     FLASK_ENV = os.getenv('FLASK_ENV')
     SECRET_KEY = os.getenv('FLASK_SECRET')
     DATABASE_URL = os.getenv('DATABASE_URL')
+    print('database_url =', DATABASE_URL)
 
     # print(APP_ROOT)
     print(APP_DIR)
