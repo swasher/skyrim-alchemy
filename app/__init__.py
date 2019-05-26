@@ -1,11 +1,14 @@
 import os
 from flask import Flask
+from flask import current_app
 from flask import jsonify
+from flask import send_file
 from flask_admin import Admin
 from flask_admin.contrib.peewee import ModelView
 from .models import Effect, Ingredient
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../dist/static')
+from .config import Config
 
 # admin ------------------------
 app.config['FLASK_ADMIN_SWATCH'] = os.getenv("FLASK_ADMIN_SWATCH")
@@ -25,5 +28,9 @@ def main():
 
 @app.route('/')
 def index():
-    s = os.getenv("SECRET_KEY")
-    return f'Hello! flask_env={s}'
+    # s = os.getenv("SECRET_KEY")
+    # return f'Hello! flask_env={s}'
+    dist_dir = current_app.config['DIST_DIR']
+    entry = os.path.join(dist_dir, 'index.html')
+    # vuejs_html = '/app/dist/index.html'
+    return send_file(entry)

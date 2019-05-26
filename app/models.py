@@ -43,7 +43,6 @@ if FLASK_ENV == 'development':
     database = SqliteDatabase('base.db')
 elif FLASK_ENV == 'production':
     # connect to heroku POSTGRES
-    DATABASE_URL = os.environ['DATABASE_URL']
     database = connect(DATABASE_URL)
 else:
     raise Exception('No FLASK_ENV environment during db init.')
