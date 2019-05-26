@@ -16,7 +16,7 @@ from .models import Effect, Ingredient
 # admin ------------------------
 # app.config['FLASK_ADMIN_SWATCH'] = os.getenv("FLASK_ADMIN_SWATCH")
 # app.config['FLASK_ADMIN_SWATCH'] = current_app.config['FLASK_ADMIN_SWATCH']
-print('FLASK_ADMIN_SWATCH =', current_app.config['FLASK_ADMIN_SWATCH'])
+print('FLASK_ADMIN_SWATCH =', os.getenv('FLASK_ADMIN_SWATCH'))
 admin = Admin(app, name='Skyrim Alchemy', template_mode='bootstrap3')
 admin.add_view(ModelView(Effect))
 admin.add_view(ModelView(Ingredient))
