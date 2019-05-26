@@ -35,7 +35,7 @@ def main():
 @app.route('/')
 def index():
     s = os.getenv("SECRET_KEY")
-    g = app.config['FLASK_ADMIN_SWATCH']
+    g = current_app.config['FLASK_ADMIN_SWATCH']
     return f'Hello! flask_env={g}'
     # dist_dir = current_app.config['DIST_DIR']
     # entry = os.path.join(dist_dir, 'index.html')
