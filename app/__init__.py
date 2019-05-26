@@ -7,7 +7,7 @@ from .models import Effect, Ingredient
 
 app = Flask(__name__)
 
-# admin -----------------------
+# admin ------------------------
 app.config['FLASK_ADMIN_SWATCH'] = os.getenv("FLASK_ADMIN_SWATCH")
 admin = Admin(app, name='Skyrim Alchemy', template_mode='bootstrap3')
 admin.add_view(ModelView(Effect))
