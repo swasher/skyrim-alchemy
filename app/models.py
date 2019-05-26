@@ -1,10 +1,11 @@
 import os
 from flask import current_app
+from app import app
 from peewee import *
 from playhouse.db_url import connect
 
-FLASK_ENV = current_app.config['FLASK_ENV']
-DATABASE_URL = current_app.config['DATABASE_URL']
+FLASK_ENV = app.config['FLASK_ENV']
+DATABASE_URL = app.config['DATABASE_URL']
 
 database_proxy = DatabaseProxy()
 
