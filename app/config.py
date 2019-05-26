@@ -13,6 +13,7 @@ class Config(object):
     load_dotenv()
 
     FLASK_ENV = os.getenv('FLASK_ENV')
+    FLASK_ADMIN_SWATCH = os.getenv('FLASK_ADMIN_SWATCH')
     SECRET_KEY = os.getenv('FLASK_SECRET')
     DATABASE_URL = os.getenv('DATABASE_URL')
 

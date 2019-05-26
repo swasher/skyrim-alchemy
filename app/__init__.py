@@ -3,12 +3,8 @@ from flask import Flask
 from flask import current_app
 from flask import jsonify
 from flask import send_file
-from whitenoise import WhiteNoise
-
 
 app = Flask(__name__, static_folder='../dist/static')
-# app.wsgi_app = WhiteNoise(app.wsgi_app, root='../dist/static/')
-
 
 
 from .config import Config
@@ -18,7 +14,9 @@ from .models import Effect, Ingredient
 
 
 # admin ------------------------
-app.config['FLASK_ADMIN_SWATCH'] = os.getenv("FLASK_ADMIN_SWATCH")
+# app.config['FLASK_ADMIN_SWATCH'] = os.getenv("FLASK_ADMIN_SWATCH")
+# app.config['FLASK_ADMIN_SWATCH'] = current_app.config['FLASK_ADMIN_SWATCH']
+print('FLASK_ADMIN_SWATCH =', current_app.config['FLASK_ADMIN_SWATCH'])
 admin = Admin(app, name='Skyrim Alchemy', template_mode='bootstrap3')
 admin.add_view(ModelView(Effect))
 admin.add_view(ModelView(Ingredient))
