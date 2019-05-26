@@ -43,10 +43,9 @@ class Ingredient(Model):
 
 
 # Based on configuration, use a different database.
-env = current_app.config['ENV']
-if env == 'development':
+if FLASK_ENV == 'development':
     database = SqliteDatabase('base.db')
-elif env == 'production':
+elif FLASK_ENV == 'production':
     # connect to heroku POSTGRES
     database = connect(DATABASE_URL)
 else:
