@@ -1,6 +1,6 @@
 import os
 from app import app
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
 
 class Config(object):
@@ -10,7 +10,7 @@ class Config(object):
 
     # dotenv_path = os.path.join(APP_DIR, '.env')
     # load_dotenv(dotenv_path)
-    load_dotenv()
+    # load_dotenv()
 
     FLASK_ENV = os.getenv('FLASK_ENV')
     FLASK_ADMIN_SWATCH = os.getenv('FLASK_ADMIN_SWATCH')

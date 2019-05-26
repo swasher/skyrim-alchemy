@@ -3,11 +3,12 @@ from flask import current_app
 from app import app
 from peewee import *
 from playhouse.db_url import connect
+from .config import Config
 
 # FLASK_ENV = app.config['FLASK_ENV']
 # DATABASE_URL = app.config['DATABASE_URL']
-FLASK_ENV = os.getenv('FLASK_ENV')
-DATABASE_URL = os.getenv('DATABASE_URL')
+# FLASK_ENV = os.getenv('FLASK_ENV')
+# DATABASE_URL = os.getenv('DATABASE_URL')
 
 
 database_proxy = DatabaseProxy()
@@ -43,11 +44,12 @@ class Ingredient(Model):
 
 
 # Based on configuration, use a different database.
+FLASK_ENV = app.config['FLASK_ENV']
 if FLASK_ENV == 'development':
     database = SqliteDatabase('base.db')
 elif FLASK_ENV == 'production':
     # connect to heroku POSTGRES
-    database = connect(DATABASE_URL)
+    database = connect(app.config['DATABASE_URL'])
 else:
     raise Exception('No FLASK_ENV environment during db init.')
 

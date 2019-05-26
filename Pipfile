@@ -7,13 +7,13 @@ verify_ssl = true
 
 [packages]
 flask = "*"
-python-dotenv = "*"
 peewee = "*"
 flask-restful = "*"
 flask-admin = "*"
 wtf-peewee = "*"
 psycopg2-binary = "*"
 gunicorn = "*"
+python-dotenv = "*"
 
 [requires]
 python_version = "3.7"
