@@ -44,10 +44,10 @@
         </ul>
       </div>
       11
-      <ol>
-        <!-- Создаём экземпляр компонента todo-item -->
+<!--      <ol>
+        &lt;!&ndash; Создаём экземпляр компонента todo-item &ndash;&gt;
         <todo-item></todo-item>
-      </ol>
+      </ol>-->
       333
     </div>
   </div>

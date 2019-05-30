@@ -14,11 +14,12 @@ class Config(object):
 
     FLASK_ENV = os.getenv('FLASK_ENV')
     FLASK_ADMIN_SWATCH = os.getenv('FLASK_ADMIN_SWATCH')
-    SECRET_KEY = os.getenv('FLASK_SECRET')
+    SECRET_KEY = os.getenv('SECRET_KEY')
     DATABASE_URL = os.getenv('DATABASE_URL')
 
     if not os.path.exists(DIST_DIR):
         raise Exception(
-            'DIST_DIR not found: {}'.format(DIST_DIR))
+            f'DIST_DIR not found: {DIST_DIR}')
+
 
 app.config.from_object('app.config.Config')
