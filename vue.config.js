@@ -1,7 +1,6 @@
 module.exports = {
   assetsDir: 'static',
   outputDir: 'dist',
-  mode: 'production',
   devServer: {
     proxy: {
       '^/*': {

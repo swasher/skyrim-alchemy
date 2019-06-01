@@ -1,5 +1,5 @@
 import os
-from app import app
+from myapp import app
 
 
 class Config(object):
@@ -21,4 +21,4 @@ class Config(object):
             f'DIST_DIR not found: {DIST_DIR}')
 
 
-app.config.from_object('app.config.Config')
+app.config.from_object('myapp.config.Config')
