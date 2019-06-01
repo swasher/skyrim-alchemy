@@ -35,11 +35,22 @@
       <div class="col-6">
 
         <ul class="list-group " v-for="ingr in ingredients" :key="ingr.name">
-          <li class="list-group-item">{{ ingr.name }}
+          <li class="list-group-item">
+            <div class="flex-column">
+              {{ ingr.name }}
+              <div>
+                <span class="badge badge-primary mr-1">{{ ingr.effect1.name }}</span>
+                <span class="badge badge-primary mr-1">{{ ingr.effect2.name }}</span>
+                <span class="badge badge-primary mr-1">{{ ingr.effect3.name }}</span>
+                <span class="badge badge-primary mr-1">{{ ingr.effect4.name }}</span>
+              </div>
+            </div>
+            <div class="flex-column">
               <div class="btn-group btn-group-sm" role="group">
                 <button type="button" class="btn btn-warning">1</button>
                 <button type="button" class="btn btn-info">2</button>
               </div>
+            </div>
           </li>
         </ul>
       </div>
@@ -56,6 +67,10 @@
 
 Vue.component('todo-item', {
   template: '<li>Это одна задача в списке</li>'
+})
+
+Vue.component('prop', {
+  template: '<li></li>'
 })
 
 <script>

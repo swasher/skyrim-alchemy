@@ -12,6 +12,10 @@ class Config(object):
     SECRET_KEY = os.getenv('SECRET_KEY')
     DATABASE_URL = os.getenv('DATABASE_URL')
 
+    if FLASK_ENV == 'development':
+        app.config['DATABASE'] = 'sqlite:///base.db'
+    # else using heroku DATABASE_URL
+
     if not os.path.exists(DIST_DIR):
         raise Exception(
             f'DIST_DIR not found: {DIST_DIR}')
