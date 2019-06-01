@@ -1,4 +1,4 @@
-from myapp import app
+from app import app
 from peewee import *
 from playhouse.flask_utils import FlaskDB
 

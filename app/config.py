@@ -1,5 +1,5 @@
 import os
-from myapp import app
+from app import app
 
 
 class Config(object):
@@ -14,11 +14,11 @@ class Config(object):
 
     if FLASK_ENV == 'development':
         app.config['DATABASE'] = 'sqlite:///base.db'
-    # else using heroku DATABASE_URL
+    # else heroku will use own DATABASE_URL
 
     if not os.path.exists(DIST_DIR):
         raise Exception(
             f'DIST_DIR not found: {DIST_DIR}')
 
 
-app.config.from_object('myapp.config.Config')
+app.config.from_object('app.config.Config')
