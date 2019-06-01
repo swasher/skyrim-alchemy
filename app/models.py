@@ -1,21 +1,9 @@
 from app import app
 from peewee import *
 from playhouse.db_url import connect
-
-# database_proxy = DatabaseProxy()
-
 from playhouse.flask_utils import FlaskDB
-# ENV = app.config['ENV']
-# if ENV == 'development':
-#     app.config['DATABASE'] = 'sqlite:///base.db'
-# # elif ENV == 'production':
-# #     # connect to heroku POSTGRES
-# #     DATABASE = app.config['DATABASE_URL']
-# else:
-#     raise Exception('No FLASK_ENV environment during db init.')
 
 db_wrapper = FlaskDB(app)
-
 
 
 class Effect(db_wrapper.Model):
@@ -63,10 +51,16 @@ class Ingredient(db_wrapper.Model):
 
 
 
+# def initialize_db():
+#     db_wrapper.database.connect()
+#     db_wrapper.database.create_tables([Effect], safe=True)
+#     db_wrapper.database.create_tables([Ingredient], safe=True)
+#     db_wrapper.database.close()
+# initialize_db()
+#
 def initialize_db():
-    db_wrapper.database.connect()
-    db_wrapper.database.create_tables([Effect], safe=True)
-    db_wrapper.database.create_tables([Ingredient], safe=True)
-    db_wrapper.database.close()
+    with db_wrapper.database as db:
+        db.connect()
+        db.create_tables([Effect, Ingredient], safe=True)
+        db.close()
 initialize_db()
-
