@@ -60,7 +60,7 @@ class Ingredient(db_wrapper.Model):
 #
 def initialize_db():
     with db_wrapper.database as db:
-        db.connect()
+        # db.connect()
         db.create_tables([Effect, Ingredient], safe=True)
         db.close()
 initialize_db()
