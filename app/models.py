@@ -62,5 +62,5 @@ def initialize_db():
     with db_wrapper.database as db:
         # db.connect()
         db.create_tables([Effect, Ingredient], safe=True)
-        db.close()
+        # db.close()
 initialize_db()
