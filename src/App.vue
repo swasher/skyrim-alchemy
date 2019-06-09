@@ -1,79 +1,93 @@
-<template>
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <div id="app">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-sm-3">
-          <div class="card">
-            <h5 class="card-header bg-info">First Ingredient</h5>
-            <div class="card-body">
-              <h5 class="card-title">Special title treatment</h5>
-              <span class="badge badge-primary">Primary</span>
-              <span class="badge badge-secondary">Secondary</span>
-              <span class="badge badge-success">Success</span>
-              <span class="badge badge-danger">Danger</span>
-              <a href="#" class="card-link text-danger">Remove</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-3">
-          <div class="card">
-            <h5 class="card-header bg-info">Second Ingredient</h5>
-            <div class="card-body">
-              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-              <span class="badge badge-primary">Primary</span>
-              <span class="badge badge-secondary">Secondary</span>
-              <span class="badge badge-success">Success</span>
-              <span class="badge badge-danger">Danger</span>
-              <a href="#" class="card-link text-danger">Remove</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-3">
-          <div class="card">
-            <h5 class="card-header bg-info">Second Ingredient</h5>
-            <div class="card-body">
-              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-              <span class="badge badge-primary">Primary</span>
-              <span class="badge badge-secondary">Secondary</span>
-              <span class="badge badge-success">Success</span>
-              <span class="badge badge-danger">Danger</span>
-              <a href="#" class="card-link text-danger">Remove</a>
-            </div>
-          </div>
-        </div>
+
+        <Header>
+          <template v-slot:header>First</template>
+        </Header>
+        <Header>
+          <template v-slot:header>Second</template>
+        </Header>
+        <Header>
+          <template v-slot:header>Third</template>
+        </Header>
+
       </div>
       <p></p>
 
       <div class="row">
         <div class="col-3">
-          <Ingredients/>
+          <Ingredients :ingredients=ingredients />
         </div>
         <div class="col-3">
-          <Ingredients2/>
+<!--          <Ingredients2/>-->
         </div>
         <div class="col-3">
-          <Ingredients2/>
+<!--          <Ingredients2/>-->
         </div>
       </div>
     <!--    <Effect/>-->
     </div>
 
-
-
   </div>
 </template>
 
 <script>
+/*eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
+import axios from 'axios';
 import Ingredients from './components/Ingredients.vue'
-import Ingredients2 from './components/Ingredients2.vue'
+// import Ingredients2 from './components/Ingredients2.vue'
+import Header from './components/Header.vue'
 // import Effect from './components/Effect.vue'
 
 export default {
   name: 'app',
+
   components: {
     Ingredients,
-    Ingredients2,
-  }
+    // Ingredients2,
+    Header,
+  },
+
+  data() {
+    return {
+      ingredients: [],
+    };
+  },
+
+  methods: {
+    getIngredients() {
+      const path = 'http://localhost:5000/ingredients';
+      axios.get(path)
+        .then((res) => {
+          this.ingredients = res.data.ingredients;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+    onClick: function (id) {
+        console.log(id)
+    },
+    effectMatch: function(eff1, eff2, eff3, eff4) {
+        // function containsAny(source,target)
+      var source = [eff1, eff2, eff3, eff4];
+      // var target = ['Опустошение здоровья', 'Опустошение магии'];
+      var target = [];
+      if (target.length > 0) {
+        var result = source.filter(function(item){ return target.indexOf(item) > -1});
+        return (result.length > 0);
+      } else {
+        return 1
+      }
+    }
+  },
+  created() {
+    this.getIngredients();
+  },
+
+
 }
 </script>
 

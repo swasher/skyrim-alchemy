@@ -1,7 +1,7 @@
 <template>
   <ul class="list-group ">
-    <li class="list-group-item px-0" v-for="ingr in ingredients" v-bind:key="ingr.id"
-        v-show="effectMatch(ingr.effect1.name, ingr.effect2.name, ingr.effect3.name, ingr.effect4.name)">
+    <li class="list-group-item px-0" v-for="ingr in ingredients" v-bind:key="ingr.id">
+<!--        v-show="effectMatch(ingr.effect1.name, ingr.effect2.name, ingr.effect3.name, ingr.effect4.name)">-->
 
 
       <div class="col-5">
@@ -31,48 +31,52 @@
 
 <script>
   /*eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
-  import axios from 'axios';
+
+  // import axios from 'axios';
 
   export default {
     name: 'Ingredients',
-    data() {
-      return {
-        ingredients: [],
-      };
-    },
-    // computed: {
-    //   eff: ['Опустошение здоровья', 'Опустошение магии']
+    // data() {
+    //   return {
+    //     ingredients: [],
+    //   };
     // },
-    methods: {
-      getIngredients() {
-        const path = 'http://localhost:5000/ingredients';
-        axios.get(path)
-          .then((res) => {
-            this.ingredients = res.data.ingredients;
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      },
-      onClick: function (id) {
-          console.log(id)
-      },
-      effectMatch: function(eff1, eff2, eff3, eff4) {
-          // function containsAny(source,target)
-        var source = [eff1, eff2, eff3, eff4];
-        // var target = ['Опустошение здоровья', 'Опустошение магии'];
-        var target = [];
-        if (target.length > 0) {
-          var result = source.filter(function(item){ return target.indexOf(item) > -1});
-          return (result.length > 0);
-        } else {
-          return 1
-        }
-      }
-    },
-    created() {
-      this.getIngredients();
-    },
+    // methods: {
+    //   getIngredients() {
+    //     const path = 'http://localhost:5000/ingredients';
+    //     axios.get(path)
+    //       .then((res) => {
+    //         this.ingredients = res.data.ingredients;
+    //       })
+    //       .catch((error) => {
+    //         console.error(error);
+    //       });
+    //   },
+    //   onClick: function (id) {
+    //       console.log(id)
+    //   },
+    //   effectMatch: function(eff1, eff2, eff3, eff4) {
+    //       // function containsAny(source,target)
+    //     var source = [eff1, eff2, eff3, eff4];
+    //     // var target = ['Опустошение здоровья', 'Опустошение магии'];
+    //     var target = [];
+    //     if (target.length > 0) {
+    //       var result = source.filter(function(item){ return target.indexOf(item) > -1});
+    //       return (result.length > 0);
+    //     } else {
+    //       return 1
+    //     }
+    //   }
+    // },
+    // created() {
+    //   this.getIngredients();
+    // },
+
+    props: {
+        ingredients: Array,
+    }
+
+
   };
 </script>
 

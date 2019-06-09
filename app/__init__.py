@@ -9,8 +9,8 @@ from peewee import *
 from playhouse.shortcuts import model_to_dict
 
 app = Flask(__name__, static_folder='../dist/static')
-from .config import Config
 CORS(app)
+from .config import Config
 
 from app.models import Effect, Ingredient
 from app.models import db_wrapper
