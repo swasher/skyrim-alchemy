@@ -3,6 +3,7 @@ from flask import Flask
 from flask import current_app
 from flask import jsonify
 from flask import send_file
+from flask import redirect
 from flask_cors import CORS
 from peewee import *
 from playhouse.shortcuts import model_to_dict
@@ -31,8 +32,7 @@ def toJSON(obj):
 
 @app.route('/ingredients', methods=['GET'])
 def main():
-    query = Ingredient.select() #.dicts()
-
+    query = Ingredient.select().order_by('name') #.dicts()
     # answer = jsonify({'ingredients': list(query)})
     answer = toJSON(query)
     return answer
@@ -40,6 +40,11 @@ def main():
 
 @app.route('/get_by_effect/<string:effect>', methods=['GET'])
 def get_by_effect(effect):
+    """
+    Return all ingredients, which contain 'effect'
+    :param effect:
+    :return:
+    """
     query = Ingredient.select().where(
         (Ingredient.effect1 == effect) |
         (Ingredient.effect2 == effect) |
@@ -51,19 +56,37 @@ def get_by_effect(effect):
     return answer
 
 
+@app.route('/get_by_ingredient/<string:ingredient>', methods=['GET'])
+def get_by_ingredient(ingredient):
+    """
+    Return all ingredients with at least one matching effect with input ingredient
+    :param effect:
+    :return:
+    """
+    answer = []
+    return answer
+
+
+
+
 from playhouse.dataset import DataSet
 @app.route('/export')
 def exporting():
     db = DataSet(app.config['DATABASE'])
-    db.freeze(Ingredient.select(), format='json', filename='ingredient.json')
-    db.freeze(Effect.select(), format='json', filename='effect.json')
+    db.freeze(Effect.select(), format='csv', filename='effects.csv')
+    db.freeze(Ingredient.select(), format='csv', filename='ingredients.csv')
+    return redirect('/admin')
 
 
 
 @app.route('/import')
 def importing():
-    db_wrapper.database.freeze(Ingredient.all(), format='json', filename='ingredient.json')
-    db_wrapper.freeze(Effect.all(), format='json', filename='effect.json')
+    db = DataSet(app.config['DATABASE'])
+    table = db['effect']
+    table.thaw(filename='effects.csv', format='csv')
+    table = db['ingredient']
+    table.thaw(filename='ingredients.csv', format='csv')
+    return redirect('/admin')
 
 
 @app.route('/')

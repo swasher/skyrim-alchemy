@@ -3,7 +3,7 @@ node_modules
 /dist
 __pycache__/
 base.db
-
+/data
 
 # local env files
 .env.local
