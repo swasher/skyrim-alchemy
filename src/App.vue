@@ -58,7 +58,7 @@ export default {
 
   methods: {
     getIngredients() {
-      const path = 'http://localhost:5000/ingredients';
+      const path = '/ingredients';
       axios.get(path)
         .then((res) => {
           this.ingredients = res.data.ingredients;
