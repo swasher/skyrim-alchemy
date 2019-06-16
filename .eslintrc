@@ -1,0 +1,9 @@
+{
+  "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+  ],
+  "rules": {
+      "vue/require-v-for-keys": "off"
+  }
+}

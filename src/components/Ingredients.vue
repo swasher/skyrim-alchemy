@@ -1,32 +1,46 @@
 <template>
-  <ul class="list-group ">
-    <li class="list-group-item px-0" v-for="ingr in ingredients" v-bind:key="ingr.id">
-<!--        v-show="effectMatch(ingr.effect1.name, ingr.effect2.name, ingr.effect3.name, ingr.effect4.name)">-->
+  <div class="col-3 px-1">
+    <div class="card">
+      <h5 class="card-header bg-info"><slot name="header"></slot> Ingredient [{{ingrCount}}]</h5>
 
+      <div v-if="selected" class="card-body">
+        <pre>{{selectedAll}}</pre>
+        <div class="row">
+            <div class="col-md-12 d-flex">
+              <h4>{{ selected.Name }}</h4>
+              <b-button class="ml-auto" size="sm" variant="danger" @click="onClickDelete">Delete</b-button>
+            </div>
+        </div>
 
-      <div class="col-5">
-        <b-button class="text-left ingr-button" size="sm"
-                  variant="outline-dark" v-text="ingr.name" v-on:click="onClick(ingr.formid)"></b-button>
-      </div>
-
-      <div class="col-7">
         <ul class="list-unstyled">
-          <li>
-            <b-link class="effect" href="#">{{ ingr.effect1.name }}</b-link>
-          </li>
-          <li>
-            <b-link class="effect" href="#">{{ ingr.effect2.name }}</b-link>
-          </li>
-          <li>
-            <b-link class="effect" href="#">{{ ingr.effect3.name }}</b-link>
-          </li>
-          <li>
-            <b-link class="effect" href="#">{{ ingr.effect4.name }}</b-link>
+          <li v-for="effect in [selected.Effect1, selected.Effect2, selected.Effect3, selected.Effect4]">
+            <b-link class="choosed-effect" href="#">{{ effect }}</b-link>
           </li>
         </ul>
       </div>
-    </li>
-  </ul>
+
+    </div>
+
+    <ul class="list-group ">
+      <li class="list-group-item p-1" v-for="ingr in ingredients" v-bind:key="ingr.FormID">
+
+        <div class="col-4 px-2 pt-1">
+          <b-button class="text-left ingr-button" size="sm" variant="outline-dark"
+                    v-text="ingr.Name" @click="onClickIngr"></b-button>
+        </div>
+
+        <div class="col-8 px-1">
+
+          <ul class="list-unstyled">
+            <li v-for="i in [ingr.Effect1, ingr.Effect2, ingr.Effect3, ingr.Effect4]">
+              <b-link class="effect" href="#" @click="onClickEffect">{{ i }}</b-link>
+            </li>
+          </ul>
+
+        </div>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
@@ -36,53 +50,61 @@
 
   export default {
     name: 'Ingredients',
-    // data() {
-    //   return {
-    //     ingredients: [],
-    //   };
-    // },
-    // methods: {
-    //   getIngredients() {
-    //     const path = 'http://localhost:5000/ingredients';
-    //     axios.get(path)
-    //       .then((res) => {
-    //         this.ingredients = res.data.ingredients;
-    //       })
-    //       .catch((error) => {
-    //         console.error(error);
-    //       });
-    //   },
-    //   onClick: function (id) {
-    //       console.log(id)
-    //   },
-    //   effectMatch: function(eff1, eff2, eff3, eff4) {
-    //       // function containsAny(source,target)
-    //     var source = [eff1, eff2, eff3, eff4];
-    //     // var target = ['Опустошение здоровья', 'Опустошение магии'];
-    //     var target = [];
-    //     if (target.length > 0) {
-    //       var result = source.filter(function(item){ return target.indexOf(item) > -1});
-    //       return (result.length > 0);
-    //     } else {
-    //       return 1
+
+
+    // deprecated
+    // data () {
+    //     return{
+    //         choosedIngredient: '',
     //     }
-    //   }
-    // },
-    // created() {
-    //   this.getIngredients();
     // },
 
     props: {
         ingredients: Array,
+        selected: Object,
+        selectedAll: Array,
+        id: Number
+    },
+
+
+    computed: {
+      ingrCount: function () {
+          if (this.ingredients) {
+            return this.ingredients.length
+          } else {
+              return 0
+          }
+      }
+    },
+
+    methods: {
+      onClickIngr: function (event) {
+          // console.log(event);
+          // console.log(event.target.textContent);
+          console.log('call onClickIngr');
+          console.log(event);
+
+          // console.log(this.ingredients[0]);
+          // console.log(this.ingredients.find(x => x.Name === event.target.textContent));
+          // deprecated this.choosedIngredient = event.target.textContent;
+          this.$emit('clickIngr', event.target.textContent, this.id)
+      },
+      onClickEffect: function (event) {
+          this.$emit('clickEffect', event.target.textContent)
+      },
+      onClickDelete: function () {
+          this.$emit('deleteIngr', this.id)
+      }
     }
 
-
   };
+
+
 </script>
 
 <style scoped>
 .ingr-button {
-  line-height: 0.9em;
+  line-height: 1em;
 }
 .list-group-item {
   display: flex;
@@ -91,9 +113,14 @@
 }
 .effect {
   font-size: 0.8em;
-
+  color: cadetblue;
+}
+.choosed-effect {
+  font-size: 0.9em;
+  color: blue;
 }
 .list-unstyled {
   line-height: 15px;
+  margin-block-end: 0;
 }
 </style>
