@@ -65,7 +65,7 @@
           ingredients1: function () {
               console.log('ingr1 start computed...');
               // THIS WORKED return this.ingredients.filter(x => !this.getCurrentSelected().includes(x.Name))
-              return this.ingredients
+              return this.ingredients.filter(x => !this.isSelected(x.Name))
           },
           ingredients2: function () {
               // let filter_effects = this.ingredients.find(x => x.Name === this.selected1);
@@ -137,7 +137,6 @@
         },
 
         isSelected: function (name) {
-              console.log('this', this);
               if (this.getCurrentSelected()) {
                   return this.getCurrentSelected().includes(name)
               } else {
@@ -175,6 +174,8 @@
 
           // Так же удаляем из всех трех списков уже выбранные компоненты.
           // todo походу, из ПЕРВОГО списка так не удаляется, потому что к нему не применяется этот метод
+          // TODO Сделал хак, теперь фильтруется прямо в функции computed:ingrediant1. Это надо сделать красиво
+          // в одном месте.
           return arr.filter(x => !this.isSelected(x.Name))
 
       }
