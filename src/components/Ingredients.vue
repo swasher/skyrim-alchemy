@@ -3,17 +3,17 @@
     <div class="card">
       <h5 class="card-header bg-info"><slot name="header"></slot> Ingredient [{{ingrCount}}]</h5>
 
-      <div v-if="selected" class="card-body">
-        <pre>{{selectedAll}}</pre>
+      <div v-if="selected[id]" class="card-body">
+
         <div class="row">
             <div class="col-md-12 d-flex">
-              <h4>{{ selected.Name }}</h4>
+              <h4>{{ selected[id].Name }}</h4>
               <b-button class="ml-auto" size="sm" variant="danger" @click="onClickDelete">Delete</b-button>
             </div>
         </div>
 
         <ul class="list-unstyled">
-          <li v-for="effect in [selected.Effect1, selected.Effect2, selected.Effect3, selected.Effect4]">
+          <li v-for="effect in effectsOfIngr(selected[id])">
             <b-link class="choosed-effect" href="#">{{ effect }}</b-link>
           </li>
         </ul>
@@ -32,8 +32,14 @@
         <div class="col-8 px-1">
 
           <ul class="list-unstyled">
-            <li v-for="i in [ingr.Effect1, ingr.Effect2, ingr.Effect3, ingr.Effect4]">
-              <b-link class="effect" href="#" @click="onClickEffect">{{ i }}</b-link>
+            <li v-for="effect in effectsOfIngr(ingr)" >
+
+<!--
+              <b-link v-if="checkMatch(effect)" class="effect-match" href="#" @click="onClickEffect">{{ effect }}</b-link>
+              <b-link v-else class="effect" href="#" @click="onClickEffect">{{ effect }}</b-link>
+-->
+              <b-link class="effect" :class="setEffectClass(effect)" @click="onClickEffect">{{ effect }}</b-link>
+
             </li>
           </ul>
 
@@ -44,62 +50,88 @@
 </template>
 
 <script>
-  /*eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
-
-  // import axios from 'axios';
-
-  export default {
-    name: 'Ingredients',
+/*eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
 
 
-    // deprecated
-    // data () {
-    //     return{
-    //         choosedIngredient: '',
-    //     }
-    // },
 
-    props: {
-        ingredients: Array,
-        selected: Object,
-        selectedAll: Array,
-        id: Number
-    },
+export default {
+  name: 'Ingredients',
 
 
-    computed: {
-      ingrCount: function () {
-          if (this.ingredients) {
-            return this.ingredients.length
-          } else {
-              return 0
-          }
+  // deprecated
+  // data () {
+  //     return{
+  //         choosedIngredient: '',
+  //     }
+  // },
+
+  props: {
+    ingredients: Array,
+    selected: Array,
+    id: Number
+  },
+
+
+  computed: {
+    ingrCount: function () {
+      if (this.ingredients) {
+        return this.ingredients.length
+      } else {
+        return 0
       }
     },
+  },
 
-    methods: {
-      onClickIngr: function (event) {
-          // console.log(event);
-          // console.log(event.target.textContent);
-          console.log('call onClickIngr');
-          console.log(event);
+  methods: {
+    onClickIngr: function (event) {
+        console.log('call onClickIngr');
+        this.$emit('clickIngr', event.target.textContent, this.id)
+    },
+    onClickEffect: function (event) {
+        this.$emit('clickEffect', event.target.textContent)
+    },
+    onClickDelete: function () {
+        this.$emit('deleteIngr', this.id)
+    },
+    effectsOfIngr(ingr) {
+      return [ingr.Effect1, ingr.Effect2, ingr.Effect3, ingr.Effect4]
+    },
 
-          // console.log(this.ingredients[0]);
-          // console.log(this.ingredients.find(x => x.Name === event.target.textContent));
-          // deprecated this.choosedIngredient = event.target.textContent;
-          this.$emit('clickIngr', event.target.textContent, this.id)
-      },
-      onClickEffect: function (event) {
-          this.$emit('clickEffect', event.target.textContent)
-      },
-      onClickDelete: function () {
-          this.$emit('deleteIngr', this.id)
+    setEffectClass: function (effect) {
+      if (this.id === 0) {
+
+        // Обрабатываем подсветку на первом ингридиенте.
+        // логика такая - если пользователь кликнул на эффекте, то подсвечиваются в этом столбце все такие же эффекты,
+        // чтобы пользователь мог заменить ингридиент.
+        // todo Эти эффекты при сортировке должны идти сначала
+        //
+        // Если пользователь кликнул на ингридиенте, то или ничего не
+        // подсвечивается, или все четыре эффекта (подумать)
+
+        if (this.selected[this.id]) {
+          if (this.effectsOfIngr(this.selected[this.id]).includes(effect)) {
+            return {'effect-match': true}
+          }
+        }
+
+      } else if (this.id === 1) {
+
+        // Обработка второго столбца.
+        // Нам нужно подсветить эффекты, имеющиеся в selected[0]
+        // todo и вывести их при сортировке вначало, учитывая кол-во совпадающих эффектов в ингридиете
+
+        if (this.selected[0]) {
+          if (this.effectsOfIngr(this.selected[0]).includes(effect)) {
+            return {'effect-match': true}
+          }
+        }
+
       }
     }
 
-  };
+  }
 
-
+};
 </script>
 
 <style scoped>
@@ -114,6 +146,11 @@
 .effect {
   font-size: 0.8em;
   color: cadetblue;
+}
+.effect-match {
+  font-size: 0.8em;
+  color: red;
+  font-weight: bold;
 }
 .choosed-effect {
   font-size: 0.9em;
